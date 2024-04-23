@@ -1,9 +1,9 @@
 from fastapi import FastAPI
-import schemes as sch
+import DataSchemes as sch
 
 app = FastAPI()
 
-@app.get('/login')
+@app.get('/login/')
 async def logIn():
     pass
 

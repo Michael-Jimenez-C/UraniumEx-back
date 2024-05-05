@@ -1,15 +1,40 @@
-from fastapi import FastAPI
+from fastapi import FastAPI, Depends, HTTPException
+from sqlalchemy.orm import Session
+
 import DataSchemes as sch
+import DataBaseManagement as models
+import crud
+from DataBaseManagement import SessionLocal, engine
+
+
+models.Base.metadata.create_all(bind=engine)
 
 app = FastAPI()
 
-@app.get('/login/')
-async def logIn():
-    pass
 
-@app.post('/sign-in')
-async def signIn():
-    pass
+def get_db():
+    db = SessionLocal()
+    try:
+        yield db
+    finally:
+        db.close()
+
+
+@app.post('/usuarios/add')
+async def signIn(user: sch.UsuarioCreate, db: Session = Depends(get_db)):
+    user = crud.createUser(db, user = user)
+    return user
+
+@app.get('/usuarios', response_model=list[sch.UsuarioGet])
+async def getUsuarios(skip:int = 0, limit:int = 100,db: Session = Depends(get_db)):
+    return crud.getUsers(db,skip,limit)
+
+@app.get('/usuario/{id}', response_model=sch.UsuarioGet)
+async def getUsuarios(id:int, db: Session = Depends(get_db)):
+    user = crud.getUserbyId(db, id)
+    if not user:
+        raise HTTPException(status_code=404, detail="User not found")
+    return user
 
 @app.delete('/usuarios')
 async def delUsuarios():
@@ -17,24 +42,4 @@ async def delUsuarios():
 
 @app.put('/usuarios')
 async def putUsuarios():
-    pass
-
-@app.get('/organzacion')
-async def getOrg():
-    pass
-
-@app.get('/productos/jwt/organization/inventory')
-async def getProducts(jwt:str, organization:int, inventory: int) -> dict:    
-    return {}
-
-@app.delete('/productos')
-async def delProducts():
-    pass
-
-@app.post('/productos')
-async def postProducts():
-    return {"":""}
-
-@app.put('/productos')
-async def putProducts():
     pass

@@ -1,10 +1,7 @@
-from dbconfig import DBCONF as DC
 from sqlalchemy import create_engine
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import sessionmaker
 from sqlalchemy import URL
-
-
 
 url_object = URL.create(
     "mysql",
@@ -14,7 +11,7 @@ url_object = URL.create(
     database="DBAP",
 )
 
-SQLALCHEMY_DATABASE_URL = "mysql://{user}:{password}@{host}:{port}/{db}".format(**DC)
+SQLALCHEMY_DATABASE_URL = "sqlite:///./sql_app.db"
 
 engine = create_engine(
     SQLALCHEMY_DATABASE_URL, connect_args={"check_same_thread": False}

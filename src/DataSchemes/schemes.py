@@ -6,10 +6,10 @@ class UsuarioGet(BaseModel):
     apellidos: str = None
     email: str
 
-class UsuarioCreate(UsuarioGet):
+class UsuarioC(UsuarioGet):
     secret:str
 
-class Usuario(UsuarioCreate):
+class Usuario(UsuarioC):
     id: int
 
     class Config:

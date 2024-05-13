@@ -20,15 +20,15 @@ def get_db():
 
 
 @app.post('/usuarios/add')
-async def signIn(user: sch.UsuarioC, db: Session = Depends(get_db)):
+async def signIn(user: sch.UsuarioCreate, db: Session = Depends(get_db)):
     user = crud.createUser(db, user = user)
     return create_access_token({'n':user.nombres, 'a':user.apellidos},timedelta(minutes=30))
 
-@app.get('/usuarios', response_model=list[sch.UsuarioGet])
+@app.get('/usuarios', response_model=list[sch.UsuarioBase])
 async def getUsuarios(skip:int = 0, limit:int = 100,db: Session = Depends(get_db)):
     return crud.getUsers(db,skip,limit)
 
-@app.get('/usuarios/{id}', response_model=sch.UsuarioGet)
+@app.get('/usuarios/{id}', response_model=sch.UsuarioBase)
 async def getUsuarios(id:int, db: Session = Depends(get_db)):
     user = crud.getUserbyId(db, id)
     if not user:

@@ -9,7 +9,7 @@ from datetime import datetime, timedelta, timezone
 
 models.Base.metadata.create_all(bind=engine)
 
-app = FastAPI()
+app = FastAPI(debug=True)
 
 def get_db():
     db = SessionLocal()

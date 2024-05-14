@@ -7,7 +7,7 @@ from .database import Base
 class Usuario(Base):
     __tablename__ = "usuario"
 
-    id = Column(Integer, primary_key=True)
+    id = Column(Integer, primary_key=True, autoincrement=True)
     nombres = Column(VARCHAR(45), nullable=False)
     apellidos = Column(VARCHAR(45), nullable=True)
     email = Column(VARCHAR(45), unique=True, nullable=False)
@@ -19,7 +19,7 @@ class Usuario(Base):
 class Asociacion(Base):
     __tablename__ = "asociacion"
 
-    id = Column(Integer, primary_key=True)
+    id = Column(Integer, primary_key=True, autoincrement=True)
     rol = Column(VARCHAR(10), nullable=False)
     usuario_id = Column(Integer, ForeignKey("usuario.id"))
     organizacion_id = Column(Integer, ForeignKey("organizacion.id"))
@@ -31,7 +31,7 @@ class Asociacion(Base):
 class Organizacion(Base):
     __tablename__ = "organizacion"
 
-    id = Column(Integer, primary_key=True)
+    id = Column(Integer, primary_key=True, autoincrement=True)
     nombre = Column(VARCHAR(45), nullable=False)
     nombreWS = Column(VARCHAR(45), nullable=False)
 
@@ -42,7 +42,7 @@ class Organizacion(Base):
 class Inventario(Base):
     __tablename__ = "inventario"
 
-    id = Column(Integer, primary_key=True)
+    id = Column(Integer, primary_key=True, autoincrement=True)
     nombre = Column(VARCHAR(45), nullable=False)
     ubicacion = Column(VARCHAR(45), nullable=False)
     organizacion_id = Column(Integer, ForeignKey("organizacion.id"))
@@ -54,7 +54,7 @@ class Inventario(Base):
 class Stock(Base):
     __tablename__ = "stock"
 
-    id = Column(Integer, primary_key=True)
+    id = Column(Integer, primary_key=True, autoincrement=True)
     cantidad = Column(Integer, nullable=False)
 
     producto_id = Column(Integer, ForeignKey("producto.id"))
@@ -66,18 +66,18 @@ class Stock(Base):
 
 class Producto(Base):
     __tablename__ = "producto"
-    id = Column(Integer, primary_key=True)
+    id = Column(Integer, primary_key=True, autoincrement=True)
     nombre = Column(VARCHAR(45), nullable=False)
     precio = Column(Float, nullable=False)
 
     stocks = relationship("Stock", back_populates="producto")
-    cantidad_facturas = relationship("CantidadFacturas", back_populates="producto")
+    cantidad_facturas = relationship("CantidadFactura", back_populates="producto")
 
 
 class CantidadFactura(Base):
     __tablename__ = "cantidadfactura"
 
-    id = Column(Integer, primary_key=True)
+    id = Column(Integer, primary_key=True, autoincrement=True)
     cantidad = Column(Integer, nullable=True)
     detalle = Column(VARCHAR(45), nullable=True)
     factura_id = Column(Integer, ForeignKey("factura.id"))
@@ -90,17 +90,17 @@ class CantidadFactura(Base):
 class Factura(Base):
     __tablename__ = "factura"
 
-    id = Column(Integer, primary_key=True)
+    id = Column(Integer, primary_key=True, autoincrement=True)
     cliente_id = Column(Integer, ForeignKey("cliente.id"))
 
     cliente = relationship("Cliente", back_populates="facturas")
-    cantidad_facturas = relationship("CantidadFacturas", back_populates="factura")
+    cantidad_facturas = relationship("CantidadFactura", back_populates="factura")
 
 
 class Cliente(Base):
     __tablename__ = "cliente"
 
-    id = Column(Integer, primary_key=True)
+    id = Column(Integer, primary_key=True, autoincrement=True)
     nombre = Column(VARCHAR(45), nullable=False)
     cedula = Column(VARCHAR(10), nullable=False)
     direccion = Column(VARCHAR(45), nullable=True)

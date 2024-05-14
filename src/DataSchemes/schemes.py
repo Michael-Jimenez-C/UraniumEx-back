@@ -15,7 +15,7 @@ class Asociacion(AsociacionCreate):
     id: int
 
     class Config:
-        orm_mode = True
+        from_attributes = True
 
 
 class UsuarioBase(BaseModel):
@@ -33,7 +33,7 @@ class Usuario(UsuarioCreate):
     asociaciones: list[Asociacion] = []
 
     class Config:
-        orm_mode = True
+        from_attributes = True
 
 
 class StockBase(BaseModel):
@@ -50,7 +50,7 @@ class Stock(StockBase):
     id: int
 
     class Config:
-        orm_mode = True
+        from_attributes = True
 
 
 class InventarioBase(BaseModel):
@@ -68,7 +68,7 @@ class Inventario(InventarioBase):
     stocks: list[Stock] = []
 
     class Config:
-        orm_mode = True
+        from_attributes = True
 
 
 class OrganizacionBase(BaseModel):
@@ -86,7 +86,7 @@ class Organizacion(OrganizacionBase):
     inventarios: list[Inventario] = []
 
     class Config:
-        orm_mode = True
+        from_attributes = True
 
 
 class CantidadFacturaBase(BaseModel):
@@ -104,7 +104,7 @@ class CantidadFactura(CantidadFacturaBase):
     id: int
 
     class Config:
-        orm_mode = True
+        from_attributes = True
 
 
 class ProductoBase(BaseModel):
@@ -122,7 +122,7 @@ class Producto(ProductoBase):
     cantidad_facturas: list[CantidadFactura] = []
 
     class Config:
-        orm_mode = True
+        from_attributes = True
 
 
 class FacturaBase(BaseModel):
@@ -138,7 +138,7 @@ class Factura(FacturaBase):
     cantidad_facturas: list[CantidadFactura] = []
 
     class Config:
-        orm_mode = True
+        from_attributes = True
 
 
 class ClienteBase(BaseModel):
@@ -156,4 +156,4 @@ class Cliente(ClienteBase):
     facturas: list[Factura] = []
 
     class Config:
-        orm_mode = True
+        from_attributes = True

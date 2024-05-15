@@ -36,5 +36,3 @@ pip install -r requeriments.txt
 ```sh
 uvicorn main:app --reload
 ```
-
-

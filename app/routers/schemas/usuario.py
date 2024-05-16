@@ -1,5 +1,4 @@
 from pydantic import BaseModel
-from .asociacion import Asociacion
 
 
 class UsuarioBase(BaseModel):
@@ -14,7 +13,6 @@ class UsuarioCreate(UsuarioBase):
 
 class Usuario(UsuarioCreate):
     id: int
-    asociaciones: list[Asociacion] = []
 
     class Config:
         from_attributes = True

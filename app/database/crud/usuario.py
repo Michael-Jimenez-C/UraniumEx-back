@@ -37,9 +37,10 @@ def removeUserById(db : Session, user_id: int):
 def putUser(db: Session, user: Usuario):
     db_user = db.query(model).filter(model.id == user.id).first()
     if db_user:
-        db_user.nombres = user.nombres | db_user.nombres
-        db_user.apellidos = user.apellidos | db_user.apellidos
-        db_user.secret = encodePassword(user.secret) | db_user.secret
-        db_user.email = user.email | db_user.email
+        db_user.nombres = user.nombres or db_user.nombres
+        db_user.apellidos = user.apellidos or db_user.apellidos
+        db_user.secret = encodePassword(user.secret) or db_user.secret
+        db_user.email = user.email or db_user.email
         db.commit()
-    return user
+        return True
+    return False

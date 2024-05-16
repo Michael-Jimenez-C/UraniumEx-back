@@ -28,9 +28,9 @@ async def signIn(user: UsuarioCreate, db: Session = Depends(get_db)):
     user = crud.createUser(db, user = user)
     return create_access_token({'n':user.nombres, 'a':user.apellidos},timedelta(minutes=30))
 
-@router.put('', response_model=UsuarioBase)
-async def putUsuario():
-    pass
+@router.put('', response_model=None)
+async def putUsuario(user: Usuario, db: Session = Depends(get_db)):
+    return crud.putUser(db,user)
 
 @router.delete('/{id}', response_model=None)
 async def delUsuario(id:int, db: Session = Depends(get_db)):

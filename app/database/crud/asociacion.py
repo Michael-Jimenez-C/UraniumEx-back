@@ -1,6 +1,6 @@
 from sqlalchemy.orm import Session
-from app.routers.schemas.asociacion import Asociacion, AsociacionCreate
-from app.database.models.models import Asociacion as model
+from routers.schemas.asociacion import Asociacion, AsociacionCreate
+from database.models.models import Asociacion as model
 
 
 def obtenerAsociacionPorId(db : Session, asociacion_id: int):

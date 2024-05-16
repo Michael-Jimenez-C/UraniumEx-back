@@ -1,7 +1,7 @@
 from pydantic import BaseModel
 
-from app.routers.schemas.stock import Stock
-from app.routers.schemas.cantidad_factura import CantidadFactura
+from .stock import Stock
+from .cantidad_factura import CantidadFactura
 
 
 class ProductoBase(BaseModel):

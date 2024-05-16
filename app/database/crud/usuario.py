@@ -1,6 +1,6 @@
 from sqlalchemy.orm import Session
-from app.routers.schemas.usuario import Usuario, UsuarioCreate
-from app.database.models.models import Usuario as model
+from routers.schemas.usuario import Usuario, UsuarioCreate
+from database.models.models import Usuario as model
 
 import hashlib
 
@@ -41,4 +41,5 @@ def putUser(db: Session, user: Usuario):
         db_user.apellidos = user.apellidos | db_user.apellidos
         db_user.secret = encodePassword(user.secret) | db_user.secret
         db_user.email = user.email | db_user.email
+        db.commit()
     return user

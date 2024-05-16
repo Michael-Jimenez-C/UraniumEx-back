@@ -1,6 +1,6 @@
 from sqlalchemy.orm import Session
-from app.routers.schemas.organizacion import Organizacion, OrganizacionCreate
-from app.database.models.models import Organizacion as model
+from routers.schemas.organizacion import Organizacion, OrganizacionCreate
+from database.models.models import Organizacion as model
 
 def obtenerOrganizacionPorId(db : Session, organizacion_id: int):
     return db.query(model).get(organizacion_id)

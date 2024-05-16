@@ -1,6 +1,6 @@
 from pydantic import BaseModel
 
-from app.routers.schemas.cantidad_factura import CantidadFactura
+from .cantidad_factura import CantidadFactura
 
 class FacturaBase(BaseModel):
     cliente_id: int

@@ -1,6 +1,6 @@
 from pydantic import BaseModel
 
-from app.routers.schemas.factura import Factura
+from .factura import Factura
 
 class ClienteBase(BaseModel):
     nombre: str

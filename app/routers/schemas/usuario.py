@@ -1,5 +1,5 @@
 from pydantic import BaseModel
-from app.routers.schemas.asociacion import Asociacion
+from .asociacion import Asociacion
 
 
 class UsuarioBase(BaseModel):

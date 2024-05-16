@@ -1,5 +1,5 @@
 from pydantic import BaseModel
-from app.routers.schemas.stock import Stock
+from .stock import Stock
 
 class InventarioBase(BaseModel):
     nombre: str

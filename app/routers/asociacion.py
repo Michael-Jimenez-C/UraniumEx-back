@@ -1,8 +1,8 @@
 from fastapi import APIRouter, Depends, HTTPException
 from sqlalchemy.orm import Session
-from app.routers.schemas.asociacion import Asociacion, AsociacionCreate
-import app.database.crud.asociacion as crud
-from app.database.connection import get_db
+from routers.schemas.asociacion import Asociacion, AsociacionCreate
+import database.crud.asociacion as crud
+from database.connection import get_db
 
 router = APIRouter(
     prefix="/asociacion",

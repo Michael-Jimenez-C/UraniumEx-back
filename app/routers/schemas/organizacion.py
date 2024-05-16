@@ -1,7 +1,7 @@
 from pydantic import BaseModel
 
-from app.routers.schemas.asociacion import Asociacion
-from app.routers.schemas.inventario import Inventario
+from .asociacion import Asociacion
+from .inventario import Inventario
 
 
 

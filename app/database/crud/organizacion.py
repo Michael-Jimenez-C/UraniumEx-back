@@ -2,25 +2,25 @@ from sqlalchemy.orm import Session
 from routers.schemas.organizacion import Organizacion, OrganizacionCreate
 from database.models.models import Organizacion as model
 
-def obtenerOrganizacionPorId(db : Session, organizacion_id: int):
+def getById(db : Session, organizacion_id: int):
     return db.query(model).get(organizacion_id)
 
-def obtenerOrganizaciones(db : Session, skip: int = 0, limit: int = 100):
+def get(db : Session, skip: int = 0, limit: int = 100):
     return db.query(model).offset(skip).limit(limit).all()
 
-def crearOrganizacion(db: Session, organizacion: OrganizacionCreate):
+def create(db: Session, organizacion: OrganizacionCreate):
     db_organizacion = model(nombre = organizacion.nombre, nombreWS = organizacion.nombreWS)
     db.add(db_organizacion)
     db.commit()
     db.refresh(db_organizacion)
     return db_organizacion
 
-def eliminarOrganizacionPorId(db : Session, organizacion_id: int):
+def delete(db : Session, organizacion_id: int):
     rows_deleted = db.query(model).where(model.id == organizacion_id).delete('auto')
     db.commit()
     return rows_deleted > 0
 
-def actualizarOrganizacion(db: Session, organizacion: Organizacion):
+def update(db: Session, organizacion: Organizacion):
     db_organizacion = db.query(model).filter(model.id == organizacion.id).first()
     if db_organizacion:
         db_organizacion.nombre = organizacion.nombre or organizacion.nombre

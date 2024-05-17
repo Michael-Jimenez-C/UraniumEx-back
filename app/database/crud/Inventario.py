@@ -3,25 +3,25 @@ from routers.schemas.inventario import Inventario, InventarioBase
 from database.models.models import Inventario as model
 
 
-def obtenerInventarioPorId(db : Session, inventario_id: int):
+def getById(db : Session, inventario_id: int):
     return db.query(model).get(inventario_id)
 
-def obtenerInventarios(db : Session, skip: int = 0, limit: int = 100):
+def get(db : Session, skip: int = 0, limit: int = 100):
     return db.query(model).offset(skip).limit(limit).all()
 
-def crearInventario(db: Session, inventario: InventarioBase):
+def create(db: Session, inventario: InventarioBase):
     db_inventario = model(**inventario.model_dump())
     db.add(db_inventario)
     db.commit()
     db.refresh(db_inventario)
     return db_inventario
 
-def eliminarInventarioPorId(db : Session, inventario_id: int):
+def delete(db : Session, inventario_id: int):
     rows_deleted = db.query(model).where(model.id == inventario_id).delete('auto')
     db.commit()
     return rows_deleted > 0
 
-def actualizarInventario(db: Session, inventario: Inventario):
+def update(db: Session, inventario: Inventario):
     db_inventario = db.query(model).filter(model.id == inventario.id).first()
     if db_inventario:
         db_inventario.nombre = inventario.nombre or db_inventario.nombre

@@ -7,10 +7,6 @@ class StockBase(BaseModel):
     inventario_id: int
 
 
-class StockCreate(StockBase):
-    pass
-
-
 class Stock(StockBase):
     id: int
 

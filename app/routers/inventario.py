@@ -11,26 +11,26 @@ router = APIRouter(
 
 @router.get('')
 async def get(skip:int = 0, limit:int = 100, db: Session = Depends(get_db)):
-    return crud.obtenerInventarios(db,skip,limit)
+    return crud.get(db,skip,limit)
 
 @router.get('/{id}')
 async def getPorId(id: int, db: Session = Depends(get_db)):
-    inventario = crud.obtenerInventarioPorId(db,id)
+    inventario = crud.getById(db,id)
     if not inventario:
         raise HTTPException(status_code=404, detail="Inventario no encontrada")
     return inventario
 
 @router.post('')
 async def post(inventario: InventarioBase, db: Session = Depends(get_db)):
-    return crud.crearInventario(db, inventario)
+    return crud.create(db, inventario)
 
 @router.put('')
 async def put(inventario: Inventario, db:Session = Depends(get_db)):
-    return crud.actualizarInventario(db,inventario)
+    return crud.update(db,inventario)
 
 @router.delete('/{id}', response_model=None)
 async def delOrg(id:int, db: Session = Depends(get_db)):
-    eliminado = crud.eliminarInventarioPorId(db, id)
+    eliminado = crud.delete(db, id)
     if not eliminado:
         raise HTTPException(status_code=404, detail="Inventario no encontrada")
     return eliminado

@@ -67,7 +67,8 @@ class Producto(Base):
     __tablename__ = "producto"
     id = Column(Integer, primary_key=True, autoincrement=True)
     nombre = Column(VARCHAR(45), nullable=False)
-    precio = Column(Float, nullable=False)
+    precio_compra = Column(Float, nullable=False)
+    precio_venta = Column(Float, nullable=False)
 
     stocks = relationship("Stock", back_populates="producto")
     cantidad_facturas = relationship("CantidadFactura", back_populates="producto")

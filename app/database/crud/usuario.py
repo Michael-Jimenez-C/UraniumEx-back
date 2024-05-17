@@ -13,28 +13,28 @@ def encodePassword(password: str) -> str | None:
 
 
 
-def getUserbyId(db : Session, user_id: int):
+def getById(db : Session, user_id: int):
     return db.query(model).filter(model.id == user_id).first()
 
-def getUserByEmail(db : Session, email: int):
+def getByEmail(db : Session, email: int):
     return db.query(model).filter(model.email == email).first()
 
-def getUsers(db : Session, skip: int = 0, limit: int = 100):
+def get(db : Session, skip: int = 0, limit: int = 100):
     return db.query(model).offset(skip).limit(limit).all()
 
-def createUser(db: Session, user: UsuarioCreate):
+def create(db: Session, user: UsuarioCreate):
     db_user = model(nombres = user.nombres, apellidos = user.apellidos, email=user.email, secret=encodePassword(user.secret))
     db.add(db_user)
     db.commit()
     db.refresh(db_user)
     return db_user
 
-def removeUserById(db : Session, user_id: int):
+def delete(db : Session, user_id: int):
     rows_deleted = db.query(model).where(model.id == user_id).delete('auto')
     db.commit()
     return rows_deleted > 0
 
-def putUser(db: Session, user: Usuario):
+def update(db: Session, user: Usuario):
     db_user = db.query(model).filter(model.id == user.id).first()
     if db_user:
         db_user.nombres = user.nombres or db_user.nombres

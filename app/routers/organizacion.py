@@ -11,26 +11,26 @@ router = APIRouter(
 
 @router.get('')
 async def get(skip:int = 0, limit:int = 100, db: Session = Depends(get_db)):
-    return crud.obtenerOrganizaciones(db,skip,limit)
+    return crud.get(db,skip,limit)
 
 @router.get('/{id}')
 async def getPorId(id: int, db: Session = Depends(get_db)):
-    organizacion = crud.obtenerOrganizacionPorId(db,id)
+    organizacion = crud.getById(db,id)
     if not organizacion:
         raise HTTPException(status_code=404, detail="Organizacion no encontrada")
     return organizacion
 
 @router.post('')
 async def post(organizacion: OrganizacionCreate, db: Session = Depends(get_db)):
-    return crud.crearOrganizacion(db, organizacion)
+    return crud.create(db, organizacion)
 
 @router.put('')
 async def put(organizacion: Organizacion, db:Session = Depends(get_db)):
-    return crud.actualizarOrganizacion(db,organizacion)
+    return crud.update(db,organizacion)
 
 @router.delete('/{id}', response_model=None)
 async def delOrg(id:int, db: Session = Depends(get_db)):
-    eliminado = crud.eliminarOrganizacionPorId(db, id)
+    eliminado = crud.delete(db, id)
     if not eliminado:
         raise HTTPException(status_code=404, detail="Organizacion no encontrada")
     return eliminado

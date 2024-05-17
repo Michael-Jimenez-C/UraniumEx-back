@@ -8,7 +8,6 @@ class AsociacionBase(BaseModel):
 class AsociacionCreate(AsociacionBase):
     usuario_id: int
     organizacion_id: int
-    pass
 
 
 class Asociacion(AsociacionCreate):

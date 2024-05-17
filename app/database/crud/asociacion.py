@@ -17,12 +17,15 @@ def crearAsociacion(db: Session, asociacion: AsociacionCreate):
     return db_asociacion
 
 def eliminarAsociacionPorId(db : Session, asociacion_id: int):
-    return db.delete(model.Usuario).filter(model.Usuario.id == asociacion_id)
+    rows_deleted = db.query(model).where(model.Usuario.id == asociacion_id).delete('auto')
+    db.commit()
+    return rows_deleted > 0
 
 def actualizarAsociacion(db: Session, asociacion: Asociacion):
     db_asociacion = db.query(model).filter(model.id == asociacion.id).first()
     if db_asociacion:
-        db_asociacion.rol = asociacion.rol
-        db_asociacion.organizacion_id = asociacion.organizacion_id
-        db_asociacion.usuario_id = asociacion.usuario_id
+        db_asociacion.rol = asociacion.rol or db_asociacion.rol
+        db_asociacion.organizacion_id = asociacion.organizacion_id or db_asociacion.organizacion_id
+        db_asociacion.usuario_id = asociacion.usuario_id or db_asociacion.usuario_id
+    db.commit()
     return asociacion

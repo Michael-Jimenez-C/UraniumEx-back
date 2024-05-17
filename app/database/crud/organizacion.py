@@ -16,11 +16,14 @@ def crearOrganizacion(db: Session, organizacion: OrganizacionCreate):
     return db_organizacion
 
 def eliminarOrganizacionPorId(db : Session, organizacion_id: int):
-    return db.delete(model).filter(model.id == organizacion_id)
+    rows_deleted = db.query(model).where(model.id == organizacion_id).delete('auto')
+    db.commit()
+    return rows_deleted > 0
 
-def actualizarOrganizacion(db: Session, asociacion: Organizacion):
-    db_organizacion = db.query(model).filter(model.id == asociacion.id).first()
+def actualizarOrganizacion(db: Session, organizacion: Organizacion):
+    db_organizacion = db.query(model).filter(model.id == organizacion.id).first()
     if db_organizacion:
-        db_organizacion.nombre = asociacion.nombre
-        db_organizacion.nombreWS = asociacion.nombreWS
-    return asociacion
+        db_organizacion.nombre = organizacion.nombre or organizacion.nombre
+        db_organizacion.nombreWS = organizacion.nombreWS or organizacion.nombreWS
+    db.commit()
+    return organizacion

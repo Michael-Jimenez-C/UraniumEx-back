@@ -11,11 +11,11 @@ router = APIRouter(
 )
 
 
-@router.get('')
+@router.get('', response_model=list[AsociacionCreate])
 async def getAsociaciones(skip:int = 0, limit:int = 100, db: Session = Depends(get_db)):
     return crud.obtenerAsociaciones(db,skip,limit)
 
-@router.get('/{id}')
+@router.get('/{id}', response_model=AsociacionCreate)
 async def getAsociacionPorId(id: int, db: Session = Depends(get_db)):
     asociacion = crud.obtenerAsociacionPorId(db,id)
     if not asociacion:
@@ -29,3 +29,10 @@ async def postAsociacion(asociacion: AsociacionCreate, db: Session = Depends(get
 @router.put('')
 async def putAsociacion(asociacion: Asociacion, db:Session = Depends(get_db)):
     return crud.actualizarAsociacion(db,asociacion)
+
+@router.delete('/{id}', response_model=None)
+async def delAsociacion(id:int, db: Session = Depends(get_db)):
+    eliminado = crud.eliminarAsociacionPorId(db, id)
+    if not eliminado:
+        raise HTTPException(status_code=404, detail="Usuario no encontrado")
+    return eliminado

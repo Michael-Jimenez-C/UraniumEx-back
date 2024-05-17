@@ -16,8 +16,6 @@ class OrganizacionCreate(OrganizacionBase):
 
 class Organizacion(OrganizacionBase):
     id: int
-    asociaciones: list[Asociacion] = []
-    inventarios: list[Inventario] = []
 
     class Config:
         from_attributes = True

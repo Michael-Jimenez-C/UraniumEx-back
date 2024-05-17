@@ -27,3 +27,10 @@ async def post(organizacion: OrganizacionCreate, db: Session = Depends(get_db)):
 @router.put('')
 async def put(organizacion: Organizacion, db:Session = Depends(get_db)):
     return crud.actualizarOrganizacion(db,organizacion)
+
+@router.delete('/{id}', response_model=None)
+async def delOrg(id:int, db: Session = Depends(get_db)):
+    eliminado = crud.eliminarOrganizacionPorId(db, id)
+    if not eliminado:
+        raise HTTPException(status_code=404, detail="Organizacion no encontrada")
+    return eliminado

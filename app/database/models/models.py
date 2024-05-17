@@ -31,7 +31,7 @@ class Organizacion(Base):
     __tablename__ = "organizacion"
 
     id = Column(Integer, primary_key=True, autoincrement=True)
-    nombre = Column(VARCHAR(45), nullable=False)
+    nombre = Column(VARCHAR(45), unique=True, nullable=False)
     nombreWS = Column(VARCHAR(45), nullable=False)
 
     asociaciones = relationship("Asociacion", back_populates="organizacion")

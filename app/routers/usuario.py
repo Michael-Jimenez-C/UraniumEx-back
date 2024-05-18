@@ -3,9 +3,11 @@ from sqlalchemy.orm import Session
 from datetime import timedelta
 
 from database.crud import usuario as crud
-from .schemas.usuario import Usuario, UsuarioCreate, UsuarioBase
+from .schemas.usuario import Usuario, UsuarioCreate, UsuarioBase, UsuarioLogin
 from database.connection import get_db
-from dependencies import create_access_token
+#from dependencies import create_access_token
+
+
 
 router = APIRouter(
     prefix="/usuarios",
@@ -26,7 +28,14 @@ async def getUsuario(id:int, db: Session = Depends(get_db)):
 @router.post('')
 async def signIn(user: UsuarioCreate, db: Session = Depends(get_db)):
     user = crud.create(db, user = user)
-    return create_access_token({'n':user.nombres, 'a':user.apellidos},timedelta(minutes=30))
+    return user#create_access_token({'id':user.id, 'hashedsecret': user.secret},timedelta(minutes=30))
+
+@router.post('/login')
+async def login(user: UsuarioLogin, db: Session = Depends(get_db)):
+    user = crud.login(db, user = user)
+    if user:
+        return user#create_access_token({'id':user.id, 'hashedsecret': user.secret},timedelta(minutes=30))
+    return 'Can\'t login'
 
 @router.put('', response_model=None)
 async def putUsuario(user: Usuario, db: Session = Depends(get_db)):

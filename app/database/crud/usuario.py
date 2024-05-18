@@ -1,5 +1,5 @@
 from sqlalchemy.orm import Session
-from routers.schemas.usuario import Usuario, UsuarioCreate
+from routers.schemas.usuario import Usuario, UsuarioCreate, UsuarioLogin
 from database.models.models import Usuario as model
 
 import hashlib
@@ -13,10 +13,18 @@ def encodePassword(password: str) -> str | None:
 
 
 
+def login(db: Session, user: UsuarioLogin):
+    dbuser = getByEmail(db, user.email)
+    user.secret = encodePassword(user.secret)
+    if dbuser:
+        if dbuser.secret==user.secret:
+            return dbuser
+    return None
+
 def getById(db : Session, user_id: int):
     return db.query(model).filter(model.id == user_id).first()
 
-def getByEmail(db : Session, email: int):
+def getByEmail(db : Session, email: str):
     return db.query(model).filter(model.email == email).first()
 
 def get(db : Session, skip: int = 0, limit: int = 100):

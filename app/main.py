@@ -1,6 +1,6 @@
 from fastapi import FastAPI
 from database.connection import engine, Base
-from routers import usuario, organizacion, asociacion, inventario, producto, stock
+from routers import usuario, organizacion, asociacion, inventario, producto, stock, compuestas
 
 Base.metadata.create_all(bind=engine)
 
@@ -12,6 +12,7 @@ app.include_router(asociacion.router)
 app.include_router(inventario.router)
 app.include_router(stock.router)
 app.include_router(producto.router)
+app.include_router(compuestas.router)
 
 @app.get("/")
 async def checkhealth():

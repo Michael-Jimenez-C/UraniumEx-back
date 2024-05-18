@@ -56,8 +56,8 @@ class Stock(Base):
     id = Column(Integer, primary_key=True, autoincrement=True)
     cantidad = Column(Integer, nullable=False)
 
-    producto_id = Column(Integer, ForeignKey("producto.id"))
-    inventario_id = Column(Integer, ForeignKey("inventario.id"))
+    producto_id = Column(Integer, ForeignKey("producto.id"), primary_key=True)
+    inventario_id = Column(Integer, ForeignKey("inventario.id"), primary_key=True)
 
     producto = relationship("Producto", back_populates="stocks")
     inventario = relationship("Inventario", back_populates="stocks")

@@ -35,8 +35,9 @@ async def login(user: UsuarioLogin, db: Session = Depends(get_db)):
     user = crud.login(db, user = user)
     if user:
         return user#create_access_token({'id':user.id, 'hashedsecret': user.secret},timedelta(minutes=30))
-    return 'Can\'t login'
-
+    
+    raise HTTPException(status_code=400, detail="can't login")
+    return None
 @router.put('', response_model=None)
 async def putUsuario(user: Usuario, db: Session = Depends(get_db)):
     return crud.update(db,user)

@@ -20,9 +20,12 @@ SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
 
 Base = declarative_base()
 
+class Connection:
+    instancia = None
+    def get_db():
+        if not Connection.instancia:
+            Connection.instancia =SessionLocal()
+        return Connection.instancia
+
 def get_db():
-    db = SessionLocal()
-    try:
-        yield db
-    finally:
-        db.close()
+    return Connection.get_db()
